@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/fontawesome/css/all.min.css" />
+  <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+  <title>Dashboard</title>
+
+</head>
+
+
+<body>
+  <header>
+    <nav class="navbar bg-white navbar-expand-lg fixed-top border-bottom">
+      <div class="container-lg">
+        <div class="col-3 pl-md-0 text-left py-2">
+          <a class="navbar-brand" href="/seller/dashboard">
+            <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+          </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header ">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body align-items-center justify-content-center py-2">
+            <ul class="navbar-nav mx-md-auto justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link" href="/seller/dashboard">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/seller/shops">Shops</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/seller/profile">My Profile</a>
+              </li>
+            </ul>
+
+            <form class="d-flex" action="/seller/search" method="get">
+              <input class="form-control me-2" type="search" name="keyword" placeholder="Search here..."
+                aria-label="Search">
+
+            </form>
+            <div class="dropdown">
+              <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="/img/avatar/<%=mini_profile%>" alt="mdo" width="35" height="35" class="rounded-circle"
+                  style="object-fit: cover;">
+
+              </a>
+              <ul class="dropdown-menu   text-small">
+
+                <li><a class="dropdown-item" href="/seller/profile">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/seller/logout">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <div class="container-lg">
+      <%-include ("../messages.ejs")%>
+        <div class="row g-3 ">
+          <div class="col-lg-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-chart-line"></i> Overall rating</h5>
+                <div class="row">
+                  <div class="col-auto">
+                    <div class="stars me-2">
+                      <% const rating=overallRating> 0 ? overallRating : 0;
+                        const filledStars = Math.floor(rating);
+                        const hasHalfStar = rating - filledStars >= 0.5;
+                        for (let i = 0; i < filledStars; i++) { %>
+                          <span style="color: #ffb900;">
+                            <i class="fas fa-star fa-lg"></i>
+                          </span>
+                          <% } %>
+                            <% if (hasHalfStar) { %>
+                              <span style="color: #ffb900;">
+                                <i class="fas fa-star-half-alt fa-lg"></i>
+                              </span>
+                              <% } %>
+                                <% for (let i=0; i < 5 - filledStars - (hasHalfStar ? 1 : 0); i++) { %>
+                                  <span style="color: #ffb900;">
+                                    <i class="far fa-star fa-lg"></i>
+                                  </span>
+                                  <% } %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <div class="rating">
+                      <span class="value fs-3">
+                        <% if (!isNaN(parseFloat(overallRating))) { %>
+                          <%= parseFloat(overallRating).toFixed(1) %>
+                            <% } else { %>
+                              0.0
+                              <% } %>
+                      </span>
+                      <span class="out-of">out of 5</span>
+                      <br>
+                      <% if (reviewsCount) { %>
+                        <small>(<%= reviewsCount %> reviews)</small>
+                        <% } else { %> <small>(No review)</small>
+                          <%}%>
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card h-100">
+              <div class="card-body">
+
+
+                <h5 class="card-title"><i class="fas fa-users"></i> Analytics</h5>
+                <p class="card-text mb-0 fw-bold">
+                  Most Rated Shop:
+                </p>
+                <% if (most_rated_shop[0]) { %>
+                  <span>
+                    <%= most_rated_shop[0].name %> (<%= parseFloat(most_rated_shop[0].avg_rating).toFixed(1) %> rating)
+                  </span>
+                  <% } else { %>
+                    <span>No results found</span>
+                    <% } %>
+
+                      <div class="my-1"></div>
+                      <p class="card-text mb-0 fw-bold">
+                        Least Rated Shop:
+                      </p>
+
+                      <% if (least_rated_shop[0]) { %>
+                        <span>
+                          <%= least_rated_shop[0].name %> (<%= parseFloat(least_rated_shop[0].avg_rating).toFixed(1) %>
+                              rating)
+                        </span>
+                        <% } else { %>
+                          <span>No results found</span>
+                          <% } %>
+
+
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card h-100">
+              <div class="card-body">
+
+
+                <h5 class="card-title"><i class="fas fa-comment-alt"></i> Recent review</h5>
+
+                <div class="row">
+
+                  <% if (review) { %>
+                    <div class="stars me-2">
+                      <% for (let i=0; i < review.rating; i++) { %>
+                        <span style="color: #ffb900;">
+                          <i class="fas fa-star fa-xs"></i>
+                        </span>
+                        <% } %>
+                    </div>
+                </div>
+                <p class="mt-0 mb-0 fw-bold">
+                  <%=review.username%>
+                </p>
+
+
+
+
+                <h5 class="my-0" id="comment-title">
+                  <%= review.title %>
+                </h5>
+                <p class="mt-0 mb-0" id="comment-review">
+                  <%= review.comment %>
+                </p>
+                <% } else { %>
+                  <p class="text-center mt-3">No review yet</p>
+                  <%}%>
+              </div>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="title d-flex align-items-center justify-content-between">
+          <h5 class="my-4">Your Shops</h5>
+          <a href="/seller/shops" class="link-dark">See all</a>
+        </div>
+
+        <div class="row g-3">
+          <% restaurants.forEach(restaurant=> {
+            const rating = restaurant.avg_rating ? parseFloat(restaurant.avg_rating).toFixed(1) : null;
+            const reviewsCount = restaurant.reviews_count || 0;
+            %>
+            <div class="col-lg-3 col-md-6">
+              <div class="card mb-3 h-100">
+                <a href="/seller/shops/<%= restaurant.id %>">
+                  <img src="/img/thumbnail/<%= restaurant.thumbnail_path %>" class="card-img-top" height="180px"
+                    width="290px" style="object-fit: cover;">
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="/seller/shops/<%= restaurant.id %>" class="link-dark link-name" id="link-name">
+                      <%= restaurant.name %>
+                    </a>
+                  </h5>
+                  <p class="card-text">
+                    <span class="d-inline-block text-truncate" style="max-width: 100%;">
+                      <%= restaurant.description %>
+                    </span>
+                  </p>
+                  <% if (reviewsCount> 0) { %>
+                    <div class="review-summary">
+                      <div class="d-flex align-items-center">
+                        <div class="rating me-2">
+                          <span class="value">
+                            <%= rating %>
+                          </span>
+                        </div>
+                        <div class="stars me-2">
+                          <% const filledStars=Math.floor(rating); const hasHalfStar=rating - filledStars>= 0.5;
+                            for (let i = 0; i < filledStars; i++) { %>
+                              <span style="color: #ffb900;">
+                                <i class="fas fa-star fa-sm"></i>
+                              </span>
+
+                              <% } %>
+                                <% if (hasHalfStar) { %>
+                                  <span style="color: #ffb900;">
+                                    <i class="fas fa-star-half-alt fa-sm"></i>
+                                  </span>
+                                  <% } %>
+                                    <% for (let i=0; i < 5 - filledStars - (hasHalfStar ? 1 : 0); i++) { %>
+                                      <span style="color: #ffb900;">
+                                        <i class="far fa-star fa-sm"></i>
+                                      </span>
+                                      <% } %>
+                        </div>
+                        <div class="reviews-count">
+                          <a href="/seller/shops/<%= restaurant.id %>/#reviews" class="link-dark link-name"
+                            id="link-name">
+                            <small class="text-muted">
+                              <%= reviewsCount %> reviews
+                            </small>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <% } else { %>
+                      <div class="no-reviews">
+                        <small class="text-muted">
+                          No reviews yet
+                        </small>
+                      </div>
+                      <% } %>
+                        <div class="location ms-auto">
+                          <small class="text-muted">
+                            <%= restaurant.location %>
+                          </small>
+                        </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+
+    </div>
+
+  </main>
+
+  <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const toastEl = document.querySelector('.toast');
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,215 @@
+<%-include ("./Include/Admin/head.ejs")%>
+
+  <body>
+
+    <%-include ("./Include/Admin/header.ejs")%>
+
+
+      <!-- ======= Sidebar ======= -->
+      <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/dashboard">
+              <i class="bi bi-columns-gap"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <!-- End Dashboard Nav -->
+          </li><!-- End Components Nav -->
+          <li class="nav-item">
+            <a class="nav-link " href="/admin/users">
+              <i class="bi bi-person-circle"></i>
+              <span>Users Management</span>
+            </a>
+          </li><!-- End Error 404 Page Nav -->
+
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/entrepreneurs">
+              <i class="bi bi-people"></i>
+
+              <span>Entrepreneurs Management</span>
+            </a>
+          </li><!-- End Blank Page Nav -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/shops">
+
+              <i class="bi bi-shop"></i>
+              <span>Shop Management</span>
+            </a>
+          </li><!-- End Blank Page Nav -->
+
+          
+
+
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/reviews">
+
+              <i class="bi bi-card-text"></i>
+              <span>Reviews</span>
+            </a>
+          </li><!-- End Blank Page Nav -->
+        </ul>
+
+      </aside><!-- End Sidebar-->
+      <div class="main" id="main">
+        <div class="pagetitle">
+          <h1>View Users</h1>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+              <li class="breadcrumb-item"><a href="/admin/users">Users Management</a></li>
+              <li class="breadcrumb-item active">View Details</li>
+            </ol>
+          </nav>
+        </div>
+        <section class="section student">
+
+          <div class="row">
+
+            <div class="card mb-3">
+              <div class="card-body">
+
+                <div class="row">
+
+                  <div class="col-lg-4">
+                    <img src="/img/avatar/<%=user_record.profile_picture%>" alt=""
+                      class="rounded-circle mx-auto mt-4 mb-2 d-block" height="175" width="175"
+                      style="object-fit: cover;">
+                    <p class="fw-bold mb-2 text-center">@
+                      <%=user_record.username%>
+                    </p>
+                  </div>
+                  <div class="col-lg-8">
+                    <h5 class="card-title">Users Details</h5>
+
+
+                    <p class="fw-bold mb-2">Full Name&nbsp; :&nbsp;<span class="fw-normal">
+                        <%=user_record.name%>
+                      </span></p>
+                    <p class="fw-bold mb-2">Phone&nbsp; :&nbsp;<span class="fw-normal">
+                        <%=user_record.phone_number%>
+                      </span></p>
+                    <p class="fw-bold mb-2">Email&nbsp; :&nbsp;<span class="fw-normal">
+                        <%=user_record.email%>
+                      </span></p>
+                    <p class="fw-bold mb-2">Location&nbsp; :&nbsp;<span class="fw-normal">
+                        <%=user_record.location%>
+                      </span></p>
+                    <p class="fw-bold mb-2">Bio&nbsp; :&nbsp;<span class="fw-normal">
+                        <%=user_record.bio%>
+                      </span></p>
+                    <p class="fw-bold mb-2">Created At&nbsp; :&nbsp;<span class="fw-normal">
+
+
+                        <%=new Date(user_record.created_at).toLocaleString(undefined, {weekday: 'long' , year: 'numeric'
+                          , month: 'long' , day: 'numeric' , hour: 'numeric' , minute: 'numeric' , second: 'numeric' ,
+                          hour12: true})%>
+                      </span></p>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="row">
+            <div class="card">
+              <div class="card-body">
+
+                <h5 class="card-title">Reviews Record</h5>
+                <div class="table-responsive-md">
+
+
+                  <table id="reviewTable" class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Comment ID</th>
+                        <th>Shop Name</th>
+                        <th>Location</th>
+                        <th>Rating</th>
+                        <th>Title</th>
+                        <th>Comment</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <%reviews_record.forEach((reviews,index)=> {%>
+                      <tr>
+                        <td>
+                          <%=index + 1%>
+                        </td>
+                        <td>
+                          <%=reviews.id%>
+                        </td>
+                        <td>
+                          <%=reviews.name%>
+                        </td>
+                        <td>
+                          <%=reviews.location%>
+                        </td>
+                        <td>
+
+                          <% for (let i=0; i < reviews.rating; i++) { %>
+                            <span style="color: #ffb900;">
+                                <i class="fas fa-star fa-xs"></i>
+                            </span>
+                            <% } %>
+                                <% for (let i=reviews.rating; i < 5; i++) { %>
+                                    <span style="color: #ffb900;">
+                                        <i class="far fa-star fa-xs"></i>
+                                    </span>
+                                    <% } %> 
+
+                                    (<%=reviews.rating%>)
+                         
+                        </td>
+                        <td>
+                          <%=reviews.title%>
+                        </td>
+                        <td>
+                          <%=reviews.comment%>
+                        </td>
+                        <td>
+                          <%=new Date(reviews.date).toLocaleString(undefined, {weekday: 'long' , year: 'numeric'
+                          , month: 'long' , day: 'numeric' , hour: 'numeric' , minute: 'numeric' ,
+                          second: 'numeric' , hour12: true})%>
+                        </td>
+                      </tr>
+                      <%})%>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+
+      <%-include ("./Include/Admin/script.ejs")%>
+        <script>
+
+          $(document).ready(function () {
+            $('#reviewTable').DataTable({
+              dom: 'Bfrtip',
+              buttons: [
+
+                {
+                  extend: 'excel',
+                  title: `${'<%=user_record.username%>'} - Reviews`,
+                  text: 'Export to Excel', className: "btn btn-success btn-sm px-3",
+                }
+              ]
+            });
+          });
+
+
+        </script>
+  </body>
+
+  </html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/fontawesome/css/all.min.css" />
+    <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+    <title>Add Shops</title>
+
+</head>
+
+
+<body>
+    <header>
+        <nav class="navbar bg-white navbar-expand-lg fixed-top border-bottom">
+            <div class="container-lg">
+                <div class="col-3 pl-md-0 text-left py-2">
+                    <a class="navbar-brand" href="/seller/dashboard">
+                        <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+                    </a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header ">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body align-items-center justify-content-center py-2">
+                        <ul class="navbar-nav mx-md-auto justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/seller/dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/seller/shops">Shops</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/seller/profile">My Profile</a>
+                            </li>
+                        </ul>
+
+                        <form class="d-flex" action="/seller/search" method="get">
+                            <input class="form-control me-2" type="search" name="keyword" placeholder="Search here..."
+                                aria-label="Search">
+
+                        </form>
+                        <div class="dropdown">
+                            <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="/img/avatar/<%=mini_profile%>" alt="mdo" width="35" height="35" class="rounded-circle"
+                                    style="object-fit: cover;">
+
+                            </a>
+                            <ul class="dropdown-menu   text-small">
+
+                                <li><a class="dropdown-item" href="/seller/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/seller/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main id="main">
+        <div class="container-lg mt-5">
+
+
+            <div class="card">
+                <h4 class="card-header">
+                    Add New Shop
+                </h4>
+                <div class="card-body">
+
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-semibold">Shop Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label fw-semibold">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label fw-semibold">Location</label>
+                            <input type="text" class="form-control" id="location" name="location" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="thumbnail" class="form-label fw-semibold">Thumbnail</label>
+                            <input type="file" class="form-control" id="thumbnail" name="thumbnail"
+                                accept="image/jpeg,image/png" onchange="previewThumbnail(event)" required>
+                            <div class="preview-thumbnail"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="location_image" class="form-label fw-semibold">Location Image</label>
+                            <input type="file" class="form-control" id="location_image" name="location_image"
+                                accept="image/jpeg,image/png" onchange="previewLocation(event)" required>
+                            <div class="preview-location-image"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="images" class="form-label fw-semibold">Images (up to 5)</label>
+                            <input type="file" class="form-control" id="images" name="images"
+                                accept="image/jpeg,image/png" onchange="previewImages(event)" required multiple>
+                            <div class="preview-images"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Shop</button>
+                        <a href="/seller/shops/" class="btn btn-danger">Cancel</a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+    </main>
+
+    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+    <script>
+        function previewThumbnail(event) {
+            const previewContainer = document.querySelector('.preview-thumbnail');
+            previewContainer.innerHTML = '';
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    img.width = 200; // set width to 200 pixels
+                    img.height = 200;
+                    img.style.margin = '5px'; // set height to 200 pixels
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewLocation(event) {
+            const previewContainer = document.querySelector('.preview-location-image');
+            previewContainer.innerHTML = '';
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    img.width = 200; // set width to 200 pixels
+                    img.height = 200;
+                    img.style.margin = '5px'; // set height to 200 pixels
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewImages(event) {
+            const previewContainer = document.querySelector('.preview-images');
+            previewContainer.innerHTML = '';
+            const files = event.target.files;
+            if (files) {
+                for (let i = 0; i < files.length; i++) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const img = document.createElement('img');
+                        img.src = reader.result;
+                        img.width = 150; // set width to 200 pixels
+                        img.height = 150; // set height to 200 pixels
+                        img.style.margin = '5px'; // set height to 200 pixels
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/fontawesome/css/all.min.css" />
+  <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+  <title>Homepage</title>
+
+</head>
+
+
+<body>
+  <header>
+    <nav class="navbar bg-white navbar-expand-lg fixed-top border-bottom">
+      <div class="container-lg">
+        <div class="col-3 pl-md-0 text-left py-2">
+          <a class="navbar-brand" href="/home">
+            <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+          </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header ">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body align-items-center justify-content-center py-2">
+            <ul class="navbar-nav mx-md-auto justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/restaurants">Food Establisment</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/profile">My Profile</a>
+              </li>
+            </ul>
+
+            <form class="d-flex" action="/search" method="get">
+              <input class="form-control me-2" type="search" name="keyword" placeholder="Search here..."
+                aria-label="Search">
+
+            </form>
+            <div class="dropdown">
+              <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="/img/avatar/<%=mini_profile%>" alt="mdo" width="35" height="35" class="rounded-circle"
+                  style="object-fit: cover;">
+
+              </a>
+              <ul class="dropdown-menu   text-small">
+
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="mt-5">
+    <%-include ("../messages.ejs")%>
+      <section class="pt-4 pb-1 mt-0 align-items-center d-flex bg-dark"
+        style="min-height: 50vh; background-size: cover; background-image: url(/img/bg.jpg); background-position: center;">
+        <div class="container-fluid">
+          <div class="row  justify-content-center align-items-center text-center d-flex  h-100 ">
+            <div class="col-12 col-md-5  h-50 ">
+              <h1 class="display-6  text-light mb-2 mt-5"><strong>EXPLORING LAOAG CITY’S FLAVORS WITH EASE</strong>
+              </h1>
+              <p class="text-light mb-3">A food finder web app that explores and reviews the best restaurants in your
+                area.</p>
+              <form class="d-flex" action="/search" method="get">
+                <input class="form-control me-2" type="search" name="keyword"
+                  placeholder="&#x1F50E;&#xFE0E; Food or place name" aria-label="Search">
+                <button class="btn btn-danger" type="submit">Search</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container-lg my-5">
+
+
+        <!-- 
+      <form action="/restaurants" method="post">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="image">Image</label>
+          <input type="text" class="form-control" id="image" name="image">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Restaurant</button>
+      </form> -->
+        <div class="title d-flex align-items-center justify-content-between">
+          <h5 class="my-4">Top places in Laoag City</h5>
+          <a href="/restaurants" class="link-dark">See all</a>
+        </div>
+
+        <div class="row g-3">
+          <% restaurants.forEach(restaurant=> {
+            const rating = restaurant.avg_rating ? parseFloat(restaurant.avg_rating).toFixed(1) : null;
+            const reviewsCount = restaurant.reviews_count || 0;
+            %>
+            <div class="col-lg-3 col-md-6">
+              <div class="card mb-3 h-100">
+                <a href="/restaurants/<%= restaurant.id %>">
+                  <img src="/img/thumbnail/<%= restaurant.thumbnail_path %>" class="card-img-top" height="180px"
+                    width="290px" style="object-fit: cover;">
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="/restaurants/<%= restaurant.id %>" class="link-dark link-name" id="link-name">
+                      <%= restaurant.name %>
+                    </a>
+                  </h5>
+                  <p class="card-text">
+                    <span class="d-inline-block text-truncate" style="max-width: 100%;">
+                      <%= restaurant.description %>
+                    </span>
+                  </p>
+                  <% if (reviewsCount> 0) { %>
+                    <div class="review-summary">
+                      <div class="d-flex align-items-center">
+                        <div class="rating me-2">
+                          <span class="value">
+                            <%= rating %>
+                          </span>
+                        </div>
+                        <div class="stars me-2">
+                          <% const filledStars=Math.floor(rating); const hasHalfStar=rating - filledStars>= 0.5;
+                            for (let i = 0; i < filledStars; i++) { %>
+                              <span style="color: #ffb900;">
+                                <i class="fas fa-star fa-sm"></i>
+                              </span>
+
+                              <% } %>
+                                <% if (hasHalfStar) { %>
+                                  <span style="color: #ffb900;">
+                                    <i class="fas fa-star-half-alt fa-sm"></i>
+                                  </span>
+                                  <% } %>
+                                    <% for (let i=0; i < 5 - filledStars - (hasHalfStar ? 1 : 0); i++) { %>
+                                      <span style="color: #ffb900;">
+                                        <i class="far fa-star fa-sm"></i>
+                                      </span>
+                                      <% } %>
+                        </div>
+                        <div class="reviews-count">
+                          <a href="/restaurants/<%= restaurant.id %>/#reviews" class="link-dark link-name"
+                            id="link-name">
+                            <small class="text-muted">
+                              <%= reviewsCount %> reviews
+                            </small>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <% } else { %>
+                      <div class="no-reviews">
+                        <small class="text-muted">
+                          No reviews yet
+                        </small>
+                      </div>
+                      <% } %>
+                        <div class="location ms-auto">
+                          <small class="text-muted">
+                            <%= restaurant.location %>
+                          </small>
+                        </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+        </div>
+
+      </div>
+  </main>
+
+  <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const toastEl = document.querySelector('.toast');
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+    <title>Seller Register</title>
+    <style>
+        .was-validated .form-control:valid {
+            background-image: none;
+            border-color: #ced4da;
+        }
+
+        .confirm-password.is-invalid~.invalid-feedback {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+
+            <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                            <div class="d-flex justify-content-center py-4">
+                                <a href="/" class="logo d-flex align-items-center w-auto">
+
+                                    <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+
+
+                                </a>
+                            </div><!-- End Logo -->
+
+                            <div class="card mb-3">
+
+                                <div class="card-body">
+
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="card-title text-center pb-0 fs-4">Create a seller account</h5>
+                                        <p class="text-center small">Enter your personal details to create account</p>
+                                    </div>
+                                    <form method="post" class="row g-3 needs-validation" novalidate>
+                                        <div class="col-12">
+                                            <label for="yourEmail" class="form-label">Your Email</label>
+                                            <input type="email" name="email" class="form-control" id="yourEmail"
+                                                required>
+                                            <div class="invalid-feedback" id="emailError">Please enter a valid Email
+                                                address!</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourPhone" class="form-label">Your Phonenumber</label>
+                                            <input type="text" name="phone" class="form-control" id="yourPhone"
+                                                required>
+                                            <div class="invalid-feedback" id="phoneError">Please enter a valid Phone
+                                                number!</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="validationCustomUsername" class="form-label">Username</label>
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                                <input type="text" class="form-control" name="username"
+                                                    id="validationCustomUsername" aria-describedby="inputGroupPrepend"
+                                                    required>
+                                                <div class="invalid-feedback" id="usernameError">Please choose a
+                                                    username.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourName" class="form-label">Your Name</label>
+                                            <input type="text" name="name" class="form-control" id="yourName" required>
+                                            <div class="invalid-feedback">Please enter your name!</div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="yourPassword" class="form-label">Password</label>
+                                            <input type="password" name="password" class="form-control"
+                                                id="yourPassword" required>
+                                            <div class="invalid-feedback">Please enter your password!</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                            <input type="password" name="confirmPassword" class="form-control"
+                                                id="confirmPassword" required>
+                                            <div class="invalid-feedback" id="confirmPasswordInvalid">Please confirm
+                                                your
+                                                password!</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="terms" type="checkbox" value=""
+                                                    id="acceptTerms" required>
+                                                <label class="form-check-label" for="acceptTerms">I agree and accept the
+                                                    <a type="button" class="link-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#privacyAct">
+                                                        Data Privacy Act of 2012
+                                                    </a></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-danger px-3 w-100">Create an
+                                                account</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a class="text-decoration-none text-danger" href="/login">Login
+                                                    as Customer</a>
+                                                <a class="text-decoration-none text-danger float-end"
+                                                    href="/seller/login">I have an account</a>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <!-- Modal -->
+            <div class="modal fade" id="privacyAct" tabindex="-1" aria-labelledby="privacyActLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="privacyActLabel">
+                                Data Privacy Act of 2012</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+
+                                <small class="text-muted mb-3">By submitting
+                                    this form, you agree to
+                                    the collection and processing of your
+                                    personal data in
+                                    accordance with the policies of the Mariano
+                                    Marcos State
+                                    University. The consent does not preclude
+                                    the existence of other
+                                    criteria for lawful processing of personal
+                                    data and does not
+                                    waive any rights under the Data Privacy Act
+                                    of 2012 and other
+                                    applicable laws.</small>
+
+                                <p>I undetake to abide the lawful processing of
+                                    personal data as
+                                    mandated by the provisions of the Data
+                                    Privact Act of 2012, it's
+                                    implementing rules and regulations as well
+                                    as the policies of
+                                    the Mariano Marcos State University (MMSU)
+                                    and the Accrediting
+                                    Agency of Chartered Colleges and
+                                    Universities in the Philippines
+                                    (AACCUP) </p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main><!-- End #main -->
+
+    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+
+        const form = document.querySelector('.needs-validation');
+        const emailInput = document.querySelector('#yourEmail');
+        const phoneInput = document.querySelector('#yourPhone');
+        const usernameInput = document.querySelector('#validationCustomUsername');
+        const passwordInput = document.querySelector('#yourPassword');
+        const confirmPasswordInput = document.querySelector('#confirmPassword');
+
+        const emailError = document.querySelector('#emailError');
+        const phoneError = document.querySelector('#phoneError');
+        const usernameError = document.querySelector('#usernameError');
+        const passwordError = document.querySelector('#passwordInvalid');
+        const confirmPasswordError = document.querySelector('#confirmPasswordInvalid');
+
+        usernameInput.addEventListener('input', async (event) => {
+            const username = event.target.value;
+            const response = await fetch(`/seller/check-username?username=${username}`);
+            const { available } = await response.json();
+
+            if (!available) {
+                usernameInput.setCustomValidity('Username is already taken');
+                usernameError.innerText = 'Username is already taken';
+                usernameError.classList.add('d-block');
+                usernameInput.classList.add('is-invalid');
+            } else {
+                usernameInput.setCustomValidity('');
+                usernameError.innerText = 'Please choose a username.';
+                usernameError.classList.remove('d-block');
+                usernameInput.classList.remove('is-invalid');
+            }
+        });
+
+        emailInput.addEventListener('input', async (event) => {
+            const email = event.target.value;
+            const response = await fetch(`/seller/check-email?email=${email}`);
+            const { available } = await response.json();
+
+            if (!available) {
+                emailInput.setCustomValidity('Email is already in use');
+                emailError.innerText = 'Email is already in use';
+                emailError.classList.add('d-block');
+                emailInput.classList.add('is-invalid');
+            } else {
+                emailInput.setCustomValidity('');
+                emailError.innerText = 'Please enter a valid Email address!';
+                emailError.classList.remove('d-block');
+                emailInput.classList.remove('is-invalid');
+            }
+        });
+
+        confirmPasswordInput.addEventListener('input', (event) => {
+            const confirmPassword = event.target.value;
+            const password = passwordInput.value;
+
+            console.log(confirmPassword)
+            console.log(password)
+
+            if (confirmPassword !== password) {
+                confirmPasswordInput.setCustomValidity('Passwords do not match');
+                confirmPasswordError.innerText = 'Passwords do not match';
+                confirmPasswordError.classList.add('d-block');
+                confirmPasswordInput.classList.add('is-invalid');
+            } else {
+                confirmPasswordInput.setCustomValidity('');
+                confirmPasswordError.innerText = 'Please confirm your password.';
+                confirmPasswordError.classList.remove('d-block');
+                confirmPasswordInput.classList.remove('is-invalid');
+            }
+        });
+
+
+        phoneInput.addEventListener('input', async (event) => {
+            const phone = event.target.value;
+            const response = await fetch(`/seller/check-phone?phone=${phone}`);
+            const { available } = await response.json();
+
+            if (!available) {
+                phoneInput.setCustomValidity('Phone number is already in use');
+                phoneError.innerText = 'Phone number is already in use';
+                phoneError.classList.add('d-block');
+                phoneInput.classList.add('is-invalid');
+            } else {
+                phoneInput.setCustomValidity('');
+                phoneError.innerText = 'Please enter a valid Phone number!';
+                phoneError.classList.remove('d-block');
+                phoneInput.classList.remove('is-invalid');
+            }
+        });
+
+        form.addEventListener('submit', function (event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            form.classList.add('was-validated');
+        });
+
+    </script>
+</body>
+
+</html>

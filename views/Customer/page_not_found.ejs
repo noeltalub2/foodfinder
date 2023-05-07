@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+  <title>No Data Available</title>
+
+</head>
+
+
+<body>
+  <header>
+    <nav class="navbar bg-white navbar-expand-lg fixed-top border-bottom">
+        <div class="container-lg">
+            <div class="col-3 pl-md-0 text-left py-2">
+                <a class="navbar-brand" href="/home">
+                    <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header ">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body align-items-center justify-content-center py-2">
+                    <ul class="navbar-nav mx-md-auto justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/restaurants">Food Establisment</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">My Profile</a>
+                        </li>
+                    </ul>
+                    
+                    <form class="d-flex" action="/search" method="get">
+                        <input class="form-control me-2" type="search" name="keyword" placeholder="Search here..."
+                            aria-label="Search">
+                        
+                    </form>
+                    <div class="dropdown">
+                        <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img src="/img/avatar/<%=mini_profile%>" alt="mdo" width="35" height="35" class="rounded-circle" style="object-fit: cover;">
+                          
+                        </a>
+                        <ul class="dropdown-menu   text-small">
+                          
+                          <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                        </ul>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+  <main id="main">
+
+    <div class="container-lg my-5">
+
+      <h3 class="my-4 tex">No Data Available...</h3>
+    
+    </div>
+  </main>
+
+  <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap");
+
+:root {
+	--bs-bg-color: #f7f5f0;
+	--bs-blue: #3459e6;
+	--bs-indigo: #6610f2;
+	--bs-purple: #6f42c1;
+	--bs-pink: #d63384;
+	--bs-red: #dc3545;
+	--bs-orange: #fd7e14;
+	--bs-yellow: #ffc107;
+	--bs-green: #198754;
+	--bs-teal: #20c997;
+	--bs-cyan: #0dcaf0;
+	--bs-black: #000;
+	--bs-white: #fff;
+	--bs-gray: #6c757d;
+	--bs-gray-dark: #343a40;
+	--bs-primary: #3459e6;
+	--bs-secondary: #6c757d;
+	--bs-danger: #198754;
+	--bs-info: #0dcaf0;
+	--bs-warning: #ffc107;
+	--bs-danger: #dc3545;
+	--bs-light: #f8f9fa;
+	--bs-dark: #212529;
+	--gray-100: #f8f9fa;
+	--gray-200: #e9ecef;
+	--gray-300: #dee2e6;
+	--gray-400: #ced4da;
+	--gray-500: #adb5bd;
+	--gray-600: #6c757d;
+	--gray-700: #495057;
+	--gray-800: #343a40;
+	--gray-900: #212529;
+}
+
+body {
+	font-family: "Poppins";
+}
+#main {
+	margin-top: 6rem;
+}
+.h1 {
+	font-family: "Annie Use Your Telescope";
+	font-size: 3.2rem;
+}
+
+.navbar .nav-item {
+	margin-right: 0.3rem;
+	margin-left: 0.3rem;
+}
+
+.navbar-nav .nav-link {
+	color: var(--bs-gray-dark);
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+}
+
+.navbar-nav .nav-link:hover {
+	color: var(--bs-dark);
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+}
+
+.navbar-toggler {
+	border: none;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+.btn-close:focus {
+	box-shadow: none;
+}
+
+.star {
+	color: #ffb900;
+	cursor: pointer;
+}
+
+.star_all_rate {
+	color: #ffb900;
+	cursor: pointer;
+}
+
+.star_rate.material-icons {
+	color: #ffb900;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+.star_rate_restaurant.material-icons {
+	color: #ffb900;
+
+	font-size: 18px;
+}
+
+.star:hover,
+.star:hover ~ .star {
+	color: #ffb900;
+}
+
+.profile-pic {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.link-name {
+	text-decoration: none;
+}
+.link-name:hover {
+	text-decoration: underline;
+}
+
+.rating {
+	border: none;
+	float: left;
+}
+
+.rating > input {
+	display: none;
+}
+.rating > label {
+	color: #ddd;
+	float: right;
+}
+
+.rating > input:checked + label {
+	color: #ffd700;
+}
+.rating > input:checked ~ label > i {
+	color: #ffd700;
+}
+.rating > label {
+	cursor: pointer;
+}
+.rating > label > i {
+	font-size: 2em;
+	vertical-align: middle;
+}
+
+#comment-review {
+	font-size: 14px;
+	line-height: 20px;
+	color: #333;
+	margin: 0;
+	word-wrap: break-word;
+}
+
+#comment-title {
+	margin: 0 0 8px;
+	font-size: 20px;
+	color: #000;
+	font-style: normal;
+}
+
+.f-carousel.is-horizontal.has-thumbs .f-carousel__slide img {
+	height: 400px !important;
+	object-fit: contain;
+}
+.image-container {
+	display: inline-block;
+	position: relative;
+}
+
+.image-wrapper {
+	position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    top: -10px;
+    right: -7px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.507);
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    padding: 0;
+    font-size: 12px;
+    color: red;
+}
+
+
+
+.delete-button:hover {
+	color: #ea4335;
+}

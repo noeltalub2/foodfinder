@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.thumbs.css" />
+  <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+  <title>
+    <%=restaurant.name%>
+  </title>
+
+</head>
+
+
+<body>
+  <header>
+    <nav class="navbar bg-white navbar-expand-lg fixed-top border-bottom">
+      <div class="container-lg">
+        <div class="col-3 pl-md-0 text-left py-2">
+          <a class="navbar-brand" href="/seller/dashboard">
+            <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+          </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header ">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body align-items-center justify-content-center py-2">
+            <ul class="navbar-nav mx-md-auto justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link" href="/seller/dashboard">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/seller/shops">Shops</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/seller/profile">My Profile</a>
+              </li>
+            </ul>
+
+            <form class="d-flex" action="/seller/search" method="get">
+              <input class="form-control me-2" type="search" name="keyword" placeholder="Search here..."
+                aria-label="Search">
+
+            </form>
+            <div class="dropdown">
+              <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="/img/avatar/<%=mini_profile%>" alt="mdo" width="35" height="35" class="rounded-circle"
+                  style="object-fit: cover;">
+
+              </a>
+              <ul class="dropdown-menu   text-small">
+
+                <li><a class="dropdown-item" href="/seller/profile">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/seller/logout">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <div class="container my-5">
+      <h1 class="mb-3">
+        <%= restaurant.name %>
+      </h1>
+      <div class="row">
+        <%-include ("../messages.ejs")%>
+
+          <div class="col-md-12 col-lg-8 order-lg-2 text-center">
+            <div class="f-carousel" id="myCarousel">
+
+              <% for (let i=0; i < images.length; i++) { %>
+
+                <div class="f-carousel__slide" data-thumb-src="/img/shops/<%= images[i].image_path %> "
+                  data-fancybox="gallery" data-src="/img/shops/<%= images[i].image_path %>">
+                  <img width="640" height="400" alt="" data-lazy-src="/img/shops/<%= images[i].image_path %>" />
+                </div>
+                <% } %>
+
+
+
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-4 order-lg-1">
+            <div class="card shadow-sm border-0 p-2 mb-3">
+              
+            
+              <div class="card-body">
+                <h4 class="card-title fw-bold">About</h4>
+                <img src="/img/thumbnail/<%=restaurant.thumbnail_path%>" alt="" class="img-fluid">
+             
+
+                  <p class="card-text mt-2">
+                    <%= restaurant.description %>
+                  </p>
+            
+        
+              </div>
+
+              
+            </div>
+            <div class="card shadow-sm border-0 p-2">
+              <div class="card-body">
+                <h6 class="card-title fw-bold">
+                  Location and contact
+                </h6>
+                <div class="my-2">
+                  <img src="/img/location/<%=restaurant.location_image%>" alt="" height="200" style="object-fit: cover; width: 100%;">
+                </div>
+                <p><i class="fas fa-map-marker-alt me-2"></i>
+                  <%=restaurant.location%>
+                </p>
+                <p><a href="tel:<%=entrepreneur_details.phone_number%>" class="link-dark link-name"><i
+                      class="fas fa-phone me-2"></i></i>
+                    <%=entrepreneur_details.phone_number%>
+                  </a>
+                <p><a href="mailto:<%=entrepreneur_details.email%>" class="link-dark link-name"><i
+                      class="fas fa-paper-plane me-2"></i></i>
+                    <%=entrepreneur_details.email%>
+                  </a>
+                </p>
+                <a href="/seller/shops/edit/<%=restaurant.id%>" class="btn btn-outline-primary">Edit</a>
+                <button onclick="confirm('<%=restaurant.id%>')" class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+
+          </div>
+      </div>
+
+
+
+
+
+
+      <h3 class="my-4 text-decoration-underline" id="reviews">Reviews</h3>
+      <% if (reviews.length> 0) { %>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="review-summary mb-3">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <div class="rating">
+                    <span class="value fs-3">
+                      <% if (reviews.length> 0) { %>
+                        <%= (reviews.reduce((acc, cur)=> acc + cur.rating, 0) /
+                          reviews.length).toFixed(1)
+                          %>
+                          <% } else { %>
+                            0.0
+                            <% } %>
+                    </span>
+                    <span class="out-of">out of 5</span>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="stars me-2">
+                    <% const rating=reviews.length> 0 ? (reviews.reduce((acc, cur) =>
+                      acc +
+                      cur.rating, 0) /
+                      reviews.length).toFixed(1) : 0;
+                      const filledStars = Math.floor(rating);
+                      const hasHalfStar = rating - filledStars >= 0.5;
+                      for (let i = 0; i < filledStars; i++) { %>
+                        <span style="color: #ffb900;">
+                          <i class="fas fa-star fa-sm"></i>
+                        </span>
+                        <% } %>
+                          <% if (hasHalfStar) { %>
+                            <span style="color: #ffb900;">
+                              <i class="fas fa-star-half-alt fa-sm"></i>
+                            </span>
+                            <% } %>
+                              <% for (let i=0; i < 5 - filledStars - (hasHalfStar ? 1 : 0); i++) { %>
+
+
+                                <span style="color: #ffb900;">
+                                  <i class="far fa-star fa-sm"></i>
+                                </span>
+                                <% } %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reviews-count">
+                <p class="text-secondary">
+                  <%= reviews.length %>
+                    <% if (reviews.length===1) { %>
+                      Review
+                      <% } else { %>
+                        Reviews
+                        <% } %>
+                </p>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <ul class="list-group">
+              <% reviews.forEach(review=> { %>
+                <li class="list-group-item border-0">
+                  <div class="row">
+                    <div class="col-3 col-md-2 col-lg-2">
+                      <img src="/img/avatar/<%=review.profile_picture%>" class="rounded-circle mx-auto d-block"
+                        height="76" width="76" alt="Profile picture" style="object-fit: cover;">
+                    </div>
+                    <div class="col-9 col-md-10 col-lg-10">
+                      <p class="mt-0 mb-0 fw-bold">
+                        <%=review.name%>
+                      </p>
+                      <div class="d-flex align-items-center">
+                        <div class="me-3">
+                          <span class="text-dark">Local Customer</span>
+                          <span class="text-muted">·</span>
+                          <span class="text-muted">
+                            <%=review.review_count%> reviews
+                          </span>
+                        </div>
+                      </div>
+
+
+                      <div class="stars me-2">
+                        <% for (let i=0; i < review.rating; i++) { %>
+                          <span style="color: #ffb900;">
+                            <i class="fas fa-star fa-xs"></i>
+                          </span>
+                          <% } %>
+                            <% for (let i=review.rating; i < 5; i++) { %>
+                              <span style="color: #ffb900;">
+                                <i class="far fa-star fa-xs"></i>
+                              </span>
+                              <% } %>
+
+
+                                <small>
+                                  <a class="text-secondary link-name user-select-none" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom"
+                                    data-bs-title="<%= new Date(review.date).toLocaleString(undefined, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true})%>">
+                                    <%= (d=> {const s = Math.floor((new
+                                      Date() - new
+                                      Date(d)) / 1000); return s < 60 ? "Just now" : s < 3600 ? `${Math.floor(s / 60)}
+                                        min${Math.floor(s / 60)> 1 ?
+                                        "s" : ""}
+                                        ago` : s < 86400 ? `${Math.floor(s / 3600)} hr${Math.floor(s / 3600)> 1 ?
+                                          "s" : ""} ago` : s < 604000 ? `${Math.floor(s / 86400)} day${Math.floor(s /
+                                            86400)> 1 ?
+                                            "s" : ""} ago` : s < 2592000 ? `${Math.floor(s / 604000)} week${Math.floor(s
+                                              / 604000)> 1 ?
+                                              "s" : ""} ago`
+                                              : new
+                                              Date(d).toLocaleString(undefined,
+                                              { year:
+                                              "numeric",
+                                              month:
+                                              "short", day:
+                                              "numeric" });
+                                              })(review.date)%>
+                                  </a>
+                                </small>
+
+                                <% if (review.modified_date) {%>
+                                  <span class="text-muted">·</span>
+                                  <small>
+                                    <a class="text-secondary link-name user-select-none" data-bs-toggle="tooltip"
+                                      data-bs-placement="bottom"
+                                      data-bs-title="<%= new Date(review.modified_date).toLocaleString(undefined, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true})%>">
+                                      Edited
+                                    </a>
+                                  </small>
+                                  <%}%>
+
+
+                      </div>
+                      <h5 class="my-0" id="comment-title">
+                        <%= review.title %>
+                      </h5>
+                      <p class="mt-0 mb-2" id="comment-review">
+                        <%= review.comment %>
+                      </p>
+
+
+
+                    </div>
+                  </div>
+                </li>
+                <hr class="my-3">
+                <% }); %>
+            </ul>
+            <% if(reviews.length> 0) { %>
+
+              <nav aria-label="Pagination">
+                <ul class="pagination justify-content-center mt-3">
+                  <% if(prevPage) { %>
+                    <li class="page-item">
+                      <a class="page-link" href="?page=<%= prevPage %>">Previous</a>
+                    </li>
+                    <% } else { %>
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#">Previous</a>
+                      </li>
+                      <% } %>
+                        <% for (let i=1; i <=totalPages; i++) { %>
+                          <% if (i===currentPage) { %>
+                            <li class="page-item active" aria-current="page">
+                              <a class="page-link" href="#">
+                                <%= i %><span class="visually-hidden">(current)</span>
+                              </a>
+                            </li>
+                            <% } else { %>
+                              <li class="page-item">
+                                <a class="page-link" href="?page=<%= i %>">
+                                  <%= i %>
+                                </a>
+                              </li>
+                              <% } %>
+                                <% } %>
+
+                                  <% if(nextPage) { %>
+                                    <li class="page-item">
+                                      <a class="page-link" href="?page=<%= nextPage %>">Next</a>
+                                    </li>
+                                    <% } else { %>
+                                      <li class="page-item disabled">
+                                        <a class="page-link" href="#">Next</a>
+                                      </li>
+                                      <% } %>
+                </ul>
+              </nav>
+              <% } %>
+                <% } else { %>
+                  <p class="text-center my-5">No reviews yet. </p>
+                  <% } %>
+          </div>
+        </div>
+
+
+    </div>
+
+
+
+  </main>
+
+  <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.thumbs.umd.js"></script>
+  <script>
+    Fancybox.bind('[data-fancybox="gallery"]', {
+      //
+    });    
+  </script>
+  <script>
+    const container = document.getElementById("myCarousel");
+    const options = { Dots: false, infinite: true, adaptiveHeight: true, };
+
+    new Carousel(container, options, { Thumbs });
+  </script>
+
+
+  <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
+
+
+  <script>
+    const submitButton = document.querySelector("#submit-button");
+    const radios = document.querySelectorAll('input[type="radio"]');
+
+    radios.forEach(radio => {
+      radio.addEventListener("click", function () {
+        submitButton.removeAttribute("disabled");
+      });
+    });
+
+
+
+  </script>
+  <script>
+    (() => {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+
+
+  </script>
+  <script>
+
+    const toastEl = document.querySelector('.toast');
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    }
+
+
+    function confirm(id) {
+      Swal.fire({
+        title: `Are you sure to permanently delete the shop?`,
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch("/seller/delete_shop/", {
+            method: "DELETE",
+            body: JSON.stringify({ data: id }),
+            headers: { "Content-Type": "application/json" },
+          })
+            .then((res) => res.json())
+            .then((response) => {
+
+              if (response.status === "success") {
+                Swal.fire(
+                  'Deleted!',
+                  'The shop has been deleted.',
+                  'success'
+                ).then(function () {
+                  window.location.replace("/seller/shops/")
+                })
+              }
+            })
+        }
+      })
+    }
+  </script>
+
+</body>
+
+</html>

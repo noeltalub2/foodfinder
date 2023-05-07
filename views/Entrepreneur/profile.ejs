@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+
+
+    <title>
+        My Profile
+    </title>
+
+</head>
+
+
+<body>
+    <header>
+        <nav class="navbar bg-white navbar-expand-lg fixed-top border-bottom">
+            <div class="container-lg">
+                <div class="col-3 pl-md-0 text-left py-2">
+                    <a class="navbar-brand" href="/seller/dashboard">
+                        <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+                    </a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header ">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body align-items-center justify-content-center py-2">
+                        <ul class="navbar-nav mx-md-auto justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/seller/dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/seller/shops">Shops</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/seller/profile">My Profile</a>
+                            </li>
+                        </ul>
+
+                        <form class="d-flex" action="/seller/search" method="get">
+                            <input class="form-control me-2" type="search" name="keyword" placeholder="Search here..."
+                                aria-label="Search">
+
+                        </form>
+                        <div class="dropdown">
+                            <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="/img/avatar/<%=mini_profile%>" alt="mdo" width="35" height="35" class="rounded-circle"
+                                    style="object-fit: cover;">
+
+                            </a>
+                            <ul class="dropdown-menu   text-small">
+
+                                <li><a class="dropdown-item" href="/seller/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/seller/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main id="main">
+        <div class="container mt-5">
+            <div class="row">
+                <%-include ("../messages.ejs")%>
+                    <div class="col-md-3 text-center">
+                        <img src="/img/avatar/<%=user.profile_picture%>" alt=""
+                            class="rounded-circle mx-auto d-block mb-3" height="175" width="175"
+                            style="object-fit: cover;">
+                        <h5 class="text-dark mb-0">
+                            <%=user.name%>
+                        </h5>
+                        <p class="m-0">@<%=user.username%>
+                        </p>
+                        <small class="text-secondary">Joined:
+                            <%= new Date(user.created_at).toLocaleDateString(undefined, { year: 'numeric' ,
+                                month: 'long' , day: 'numeric' }) %>
+                        </small>
+                        <div class="mt-2 mb-4">
+                            <!-- Button to trigger the modal -->
+                            <a type="button" class="link-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                Edit Profile
+                            </a>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-9">
+
+
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="mx-1 btn btn-danger active" id="pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                    aria-selected="true">Home</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="mx-1 btn btn-danger" id="pills-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-profile" type="button" role="tab"
+                                    aria-controls="pills-profile" aria-selected="false">Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="mx-1 btn btn-danger" id="pills-contact-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-contact" type="button" role="tab"
+                                    aria-controls="pills-contact" aria-selected="false">Contact</button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                aria-labelledby="pills-home-tab" tabindex="0">
+                                <div class="row mt-4">
+                                    <div class="col-4">
+                                        <h6>Shops</h6>
+                                        <p class="text-dark fs-4 fw-bold">
+                                            <%=total_shop%>
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6>Average rating</h6>
+                                        <p class="text-dark fs-4 fw-bold">
+                                            <% if (!isNaN(parseFloat(avg_rating))) { %>
+                                                <%= parseFloat(avg_rating).toFixed(1) %>
+                                                    <% } else { %>
+                                                        0.0
+                                                        <% } %>
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h6>Total reviews</h6>
+                                        <p class="text-dark fs-4 fw-bold">
+                                            <%=total_review%>
+                                        </p>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                aria-labelledby="pills-profile-tab" tabindex="0">
+                                <p>Username: <span class="fw-bold">
+                                        <%=user.username%>
+                                    </span></p>
+                                <p>Name: <span class="fw-bold">
+                                        <%=user.name%>
+                                    </span></p>
+                                <p>Address: <span class="fw-bold">
+                                        <%=user.location%>
+                                    </span>
+                                </p>
+                                <p>Bio: <span class="fw-bold">
+                                        <%=user.bio%>
+                                    </span>
+                                </p>
+
+                            </div>
+                            <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                aria-labelledby="pills-contact-tab" tabindex="0">
+                                <p>Phonenumber:
+                                    <a href="tel:<%=user.phone_number%>" class="link-dark link-name">
+                                        <span class="fw-bold">
+                                            <%=user.phone_number%>
+                                        </span>
+                                    </a>
+                                <p>Email: <a href="mailto:<%=user.email%>" class="link-dark link-name">
+                                        <span class="fw-bold">
+                                            <%=user.email%>
+                                        </span>
+                                    </a>
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form method="post" action="/seller/profile" class="needs-validation" novalidate
+                            enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="mb-3">
+                                    <img src="/img/avatar/<%=user.profile_picture%>" alt=""
+                                        class="rounded-circle mx-auto d-block" id="img-profile" height="175" width="175"
+                                        style="object-fit: cover;">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label fw-semibold">Upload Avatar</label>
+                                    <input class="form-control" type="file" id="avatar" name="avatar">
+                                    <input class="form-control" type="hidden" id="profile_picture"
+                                        name="profile_picture" value="<%=user.profile_picture%>">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label fw-semibold">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required
+                                        value="<%= user.name %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="location" class="form-label fw-semibold">Location</label>
+                                    <input type="text" class="form-control" id="location" name="location" required
+                                        value="<%= user.location %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label fw-semibold">Phonenumber</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" required
+                                        value="<%= user.phone_number %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-semibold">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" required
+                                        value="<%= user.email %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label fw-semibold">Bio</label>
+                                    <textarea class="form-control" id="bio" name="bio" rows="3"
+                                        required><%= user.bio %></textarea>
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger" id="submit-button">Save Changes</button>
+
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+
+    <script>
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+    </script>
+    <script>
+
+        const toastEl = document.querySelector('.toast');
+        if (toastEl) {
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        const avatarInput = document.getElementById('avatar');
+        const profileImg = document.getElementById('img-profile');
+
+        avatarInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                profileImg.src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+
+</body>
+
+</html>

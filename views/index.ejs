@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+    <title>Homepage</title>
+  
+</head>
+
+<body>
+    <header>
+        <nav class="navbar bg-white navbar-expand-lg fixed-top shadow-sm">
+            <div class="container-lg">
+                <div class="col-3 pl-md-0 text-left py-2">
+                    <a class="navbar-brand" href="/">
+                        <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+                    </a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header ">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body justify-content-center py-2">
+                   
+                        <ul class="navbar-nav justify-content-end d-lg-flex ms-md-auto">
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/register">Register</a>
+                            </li>
+                            <li class="nav-item mt-2 mt-lg-0">
+                                <a type="button" class="btn btn-danger" href="/login">
+                                    Login
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main id="main" class="d-flex align-items-center">
+
+        <div class="container">
+            <div class="row justify-content-between gy-5">
+                <div
+                    class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+                    <h1 class="h1">EXPLORE LAOAG CITY’S FOOD WITH EASE</h1>
+                    <p>The Food Finder is a web-based system that will assist anyone in locating a certain food shop in
+                        Laoag City. It will simplify things for everyone by displaying the location and menu of the food
+                        shop that they are looking for.</p>
+                    <div><a href="/login" class="btn btn-danger">Get Started</a></div>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+                    <img src="/img/1hero-img.png" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+   
+
+    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

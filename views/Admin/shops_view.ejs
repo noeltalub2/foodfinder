@@ -1,0 +1,228 @@
+<%-include ("./Include/Admin/head.ejs")%>
+
+    <body>
+
+        <%-include ("./Include/Admin/header.ejs")%>
+
+
+            <!-- ======= Sidebar ======= -->
+            <aside id="sidebar" class="sidebar">
+
+                <ul class="sidebar-nav" id="sidebar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="/admin/dashboard">
+                            <i class="bi bi-columns-gap"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <!-- End Dashboard Nav -->
+                    </li><!-- End Components Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="/admin/users">
+                            <i class="bi bi-person-circle"></i>
+                            <span>Users Management</span>
+                        </a>
+                    </li><!-- End Error 404 Page Nav -->
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="/admin/entrepreneurs">
+                            <i class="bi bi-people"></i>
+
+                            <span>Entrepreneurs Management</span>
+                        </a>
+                    </li><!-- End Blank Page Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/shops">
+
+                            <i class="bi bi-shop"></i>
+                            <span>Shop Management</span>
+                        </a>
+                    </li><!-- End Blank Page Nav -->
+
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="/admin/reviews">
+
+                            <i class="bi bi-card-text"></i>
+                            <span>Reviews</span>
+                        </a>
+                    </li><!-- End Blank Page Nav -->
+                </ul>
+
+            </aside><!-- End Sidebar-->
+            <div class="main" id="main">
+                <div class="pagetitle">
+                    <h1>View Shops</h1>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/shops">Shops Management</a></li>
+                            <li class="breadcrumb-item active">View Details</li>
+                        </ol>
+                    </nav>
+                </div>
+                <section class="section student">
+
+                    <div class="row">
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-lg-4"><img src="/img/thumbnail/<%=shop_record.thumbnail_path%>"
+                                            alt="" class="mx-auto mt-4 mb-2 d-block" height="200" width="100%"
+                                            style="object-fit: cover;">
+                                        <small class="text-center fst-italic">Thumbnail Image</small>
+
+
+                                        <img src="/img/location/<%=shop_record.location_image%>" alt=""
+                                            class="mx-auto mt-4 mb-2 d-block" height="200" width="100%"
+                                            style="object-fit: cover;"> <small class="text-center fst-italic">Location
+                                            Image</small>
+
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <h5 class="card-title">Shop Details</h5>
+                                        <p class="fw-bold mb-2">Owner&nbsp; :&nbsp;<span class="fw-normal">
+                                                <%=shop_owner.name%>
+                                            </span></p>
+                                        <p class="fw-bold mb-2">Username&nbsp; :&nbsp;<span class="fw-normal">
+                                                <%=shop_owner.username%>
+                                            </span></p>
+                                        <p class="fw-bold mb-2">Email&nbsp; :&nbsp;<span class="fw-normal">
+                                                <%=shop_owner.email%>
+                                            </span></p>
+
+                                        <p class="fw-bold mb-2">Phone&nbsp; :&nbsp;<span class="fw-normal">
+                                                <%=shop_owner.phone_number%>
+                                            </span></p>
+                                        <hr>
+                                        <p class="fw-bold mb-2">Shop Name&nbsp; :&nbsp;<span class="fw-normal">
+                                                <%=shop_record.name%>
+                                            </span></p>
+                                        <p class="fw-bold mb-2">Description&nbsp; :&nbsp;<span class="fw-normal">
+                                                <%=shop_record.description%>
+                                            </span></p>
+                                        <p class="fw-bold mb-2">Location&nbsp; :&nbsp;<span class="fw-normal">
+                                                <%=shop_record.location%>
+                                            </span></p>
+
+                                        <p class="fw-bold mb-2">Created At&nbsp; :&nbsp;<span class="fw-normal">
+
+
+                                                <%=new Date(shop_record.created_at).toLocaleString(undefined,
+                                                    {weekday: 'long' , year: 'numeric' , month: 'long' , day: 'numeric'
+                                                    , hour: 'numeric' , minute: 'numeric' , second: 'numeric' , hour12:
+                                                    true})%>
+                                            </span></p>
+                                        <p class="fw-bold mb-2">Average Rating&nbsp; :&nbsp;<span class="fw-normal">
+
+
+                                                <% for (let i=0; i < shop_record.avg_rating; i++) { %>
+                                                    <span style="color: #ffb900;">
+                                                        <i class="fas fa-star fa-xs"></i>
+                                                    </span>
+                                                    <% } %>
+                                                        <% for (let i=shop_record.avg_rating; i < 5; i++) { %>
+                                                            <span style="color: #ffb900;">
+                                                                <i class="far fa-star fa-xs"></i>
+                                                            </span>
+                                                            <% } %>
+
+                                                                (<%=parseFloat(shop_record.avg_rating).toFixed(2)%>)
+                                            </span></p>
+
+                                        <p class="fw-bold mb-2">Total Reviews&nbsp; :&nbsp;<span class="fw-normal">
+
+
+
+
+                                                <%=shop_record.reviews_count%>
+                                            </span></p>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-body ">
+
+                                <h5 class="card-title">Shops Gallery</h5>
+                                <div class="text-center">
+                                    <div class="f-carousel" id="myCarousel">
+
+                                        <% for (let i=0; i < images.length; i++) { %>
+
+                                            <div class="f-carousel__slide"
+                                                data-thumb-src="/img/shops/<%= images[i].image_path %> "
+                                                data-fancybox="gallery"
+                                                data-src="/img/shops/<%= images[i].image_path %>">
+                                                <img height="450" alt=""
+                                                    data-lazy-src="/img/shops/<%= images[i].image_path %>" />
+                                            </div>
+                                            <% } %>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+            <%-include ("./Include/Admin/script.ejs")%>
+
+                <script>
+
+                    $(document).ready(function () {
+                        $('#reviewTable').DataTable({
+                            dom: 'Bfrtip',
+                            buttons: [
+
+                                {
+                                    extend: 'excel',
+                                    title: `${'<%=shop_record.username%>'} - Reviews`,
+                                    text: 'Export to Excel', className: "btn btn-success btn-sm px-3",
+                                }
+                            ]
+                        });
+                    });
+
+
+                </script>
+
+
+                <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.umd.js"></script>
+                <script
+                    src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.thumbs.umd.js"></script>
+                <script>
+                    Fancybox.bind('[data-fancybox="gallery"]', {
+                        //
+                    });    
+                </script>
+                <script>
+                    const container = document.getElementById("myCarousel");
+                    const options = { Dots: false, infinite: true, adaptiveHeight: true, };
+
+                    new Carousel(container, options, { Thumbs });
+                </script>
+    </body>
+
+    </html>

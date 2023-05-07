@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="icon" href="/img/logo2.png" type="image/png" sizes="16x16">
+
+
+    <title>
+        My Profile
+    </title>
+
+</head>
+
+
+<body>
+    <header>
+        <nav class="navbar bg-white navbar-expand-lg fixed-top border-bottom">
+            <div class="container-lg">
+                <div class="col-3 pl-md-0 text-left py-2">
+                    <a class="navbar-brand" href="/home">
+                        <img src="/img/logo.png" alt="Logo" height="30" class="align-text-center">
+                    </a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header ">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body align-items-center justify-content-center py-2">
+                        <ul class="navbar-nav mx-md-auto justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/restaurants">Food Establisment</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile">My Profile</a>
+                            </li>
+                        </ul>
+
+                        <form class="d-flex" action="/search" method="get">
+                            <input class="form-control me-2" type="search" name="keyword" placeholder="Search here..."
+                                aria-label="Search">
+
+                        </form>
+                        <div class="dropdown">
+                            <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="/img/avatar/<%=user.profile_picture%>" alt="mdo" width="35" height="35"
+                                    class="rounded-circle" style="object-fit: cover;">
+
+                            </a>
+                            <ul class="dropdown-menu   text-small">
+
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main id="main">
+        <div class="container mt-5">
+            <div class="row">
+                <h5 class="mb-3">Profile Information</h5>
+                <%-include ("../messages.ejs")%>
+                    <div class="col-md-3 text-center">
+                        <img src="/img/avatar/<%=user.profile_picture%>" alt=""
+                            class="rounded-circle mx-auto d-block mb-3" height="175" width="175"
+                            style="object-fit: cover;">
+                        <h5 class="text-dark mb-0">
+                            <%=user.name%>
+                        </h5>
+                        <p class="m-0">
+                            @<%=user.username%>
+                        </p>
+                        <small class="text-secondary">
+                            Joined:
+                            <%= new Date(user.created_at).toLocaleDateString(undefined, { year: 'numeric' ,
+                                month: 'long' , day: 'numeric' }) %>
+                        </small>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h6>Total Reviews</h6>
+                                <p class="text-dark">
+                                    <span class="fw-bold">
+                                        <%=review_count%>
+                                    </span>
+
+                                </p>
+                            </div>
+
+
+                        </div>
+                        <h6 class="mt-3">Location</h6>
+                        <p class="text-secondary">
+                            <%if (user.location) {%>
+                                <%=user.location%>
+                                    <% } else {%>
+                                        <a href="#" class="link-name">Add Location</a>
+                                        <%}%>
+                        </p>
+                        <h6 class="mt-4">About Me</h6>
+                        <p class="mb-4">
+                            <%if (user.bio) {%>
+                                <%=user.bio%>
+                                    <% } else {%>
+                                        <a href="#" class="link-name">Add Bio</a>
+                                        <%}%>
+                        </p>
+                        <!-- Button to trigger the modal -->
+                        <a type="button" class="link-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                            Edit Profile
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        <h4 class="text-dark">Recent Reviews</h4>
+                        <% if (reviews.length> 0) { %>
+
+                            <ul class="list-group">
+                                <% reviews.forEach(review=> { %>
+                                    <li class="list-group-item border-0 ">
+                                        <div class="row">
+                                            <div class="col-2 col-md-2 col-lg-1">
+                                                <a href="/restaurants/<%=review.restaurant_id%>">
+                                                <img src="/img/thumbnail/<%=review.thumbnail_path%>"
+                                                    class="rounded-circle mx-auto d-block" height="50" width="50"
+                                                    alt="Profile picture"></a>
+                                            </div>
+                                            <div class="col-auto col-md-10 col-lg-11">
+                                                <a href="/restaurants/<%=review.restaurant_id%>"
+                                                    class="mt-0 mb-0 link-dark link-name fw-bold">
+                                                    <%=review.name%>
+                                                </a>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="me-3">
+                                                        <span class="text-dark">
+                                                            <%=review.location%>
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="stars me-2">
+                                                    <% for (let i=0; i < review.rating; i++) { %>
+                                                        <span style="color: #ffb900;">
+                                                            <i class="fas fa-star fa-xs"></i>
+                                                        </span>
+                                                        <% } %>
+                                                            <% for (let i=review.rating; i < 5; i++) { %>
+                                                                <span style="color: #ffb900;">
+                                                                    <i class="far fa-star fa-xs"></i>
+                                                                </span>
+                                                                <% } %>
+
+
+                                                                    <small>
+                                                                        <a href="#" class="link-name text-secondary"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="bottom"
+                                                                            data-bs-title="<%= new Date(review.date).toLocaleString(undefined, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true})%>">
+                                                                            <%= (d=> {const s = Math.floor((new Date() -
+                                                                                new
+                                                                                Date(d)) / 1000); return s < 60
+                                                                                    ? "Just now" : s < 3600 ?
+                                                                                    `${Math.floor(s / 60)}
+                                                                                    min${Math.floor(s / 60)> 1 ? "s" :
+                                                                                    ""}
+                                                                                    ago` : s < 86400 ? `${Math.floor(s /
+                                                                                        3600)} hr${Math.floor(s / 3600)>
+                                                                                        1 ?
+                                                                                        "s" : ""} ago` : s < 604800 ?
+                                                                                            `${Math.floor(s / 86400)}
+                                                                                            day${Math.floor(s / 86400)>
+                                                                                            1 ?
+                                                                                            "s" : ""} ago` : s < 2592000
+                                                                                                ? `${Math.floor(s /
+                                                                                                604800)}
+                                                                                                week${Math.floor(s /
+                                                                                                604800)> 1 ? "s" : ""}
+                                                                                                ago`
+                                                                                                : new
+                                                                                                Date(d).toLocaleString(undefined,
+                                                                                                { year: "numeric",
+                                                                                                month:
+                                                                                                "short", day: "numeric"
+                                                                                                });
+                                                                                                })(review.date)%>
+                                                                        </a>
+                                                                    </small>
+                                                                    <% if (review.modified_date) {%>
+                                                                        <span class="text-muted">·</span>
+                                                                        <small>
+                                                                            <a class="text-secondary link-name user-select-none"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="bottom"
+                                                                                data-bs-title="<%= new Date(review.modified_date).toLocaleString(undefined, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true})%>">
+                                                                                Edited
+                                                                            </a>
+                                                                        </small>
+                                                                        <%}%>
+
+
+                                                </div>
+                                                <h5 class="my-0" id="comment-title">
+                                                    <%= review.title %>
+                                                </h5>
+                                                <p class="mt-0 mb-2" id="comment-review">
+                                                    <%= review.comment %>
+                                                </p>
+
+
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <hr class="my-2">
+                                    <% }); %>
+                            </ul>
+                            <% if(reviews.length> 0) { %>
+                                <nav aria-label="Pagination">
+                                    <ul class="pagination justify-content-center mt-3">
+                                        <% if(prevPage) { %>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page=<%= prevPage %>">Previous</a>
+                                            </li>
+                                            <% } else { %>
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" href="#">Previous</a>
+                                                </li>
+                                                <% } %>
+                                                    <% for (let i=1; i <=totalPages; i++) { %>
+                                                        <% if (i===currentPage) { %>
+                                                            <li class="page-item active" aria-current="page">
+                                                                <a class="page-link" href="#">
+                                                                    <%= i %><span
+                                                                            class="visually-hidden">(current)</span>
+                                                                </a>
+                                                            </li>
+                                                            <% } else { %>
+                                                                <li class="page-item">
+                                                                    <a class="page-link" href="?page=<%= i %>">
+                                                                        <%= i %>
+                                                                    </a>
+                                                                </li>
+                                                                <% } %>
+                                                                    <% } %>
+
+                                                                        <% if(nextPage) { %>
+                                                                            <li class="page-item">
+                                                                                <a class="page-link"
+                                                                                    href="?page=<%= nextPage %>">Next</a>
+                                                                            </li>
+                                                                            <% } else { %>
+                                                                                <li class="page-item disabled">
+                                                                                    <a class="page-link"
+                                                                                        href="#">Next</a>
+                                                                                </li>
+                                                                                <% } %>
+                                    </ul>
+                                </nav>
+                                <% } %>
+                                    <% } else { %>
+                                        <p class="text-center my-5">No reviews yet. Be the first to leave a review!</p>
+                                        <% } %>
+
+                    </div>
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form method="post" action="/profile" class="needs-validation" novalidate
+                            enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="mb-3">
+                                    <img src="/img/avatar/<%=user.profile_picture%>" alt=""
+                                        class="rounded-circle mx-auto d-block" id="img-profile" height="175" width="175"
+                                        style="object-fit: cover;">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label fw-semibold">Upload Avatar</label>
+                                    <input class="form-control" type="file" id="avatar" name="avatar">
+                                    <input class="form-control" type="hidden" id="profile_picture"
+                                        name="profile_picture" value="<%=user.profile_picture%>">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label fw-semibold">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required
+                                        value="<%= user.name %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="location" class="form-label fw-semibold">Location</label>
+                                    <input type="text" class="form-control" id="location" name="location" required
+                                        value="<%= user.location %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label fw-semibold">Phonenumber</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" required
+                                        value="<%= user.phone_number %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-semibold">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" required
+                                        value="<%= user.email %>">
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label fw-semibold">Bio</label>
+                                    <textarea class="form-control" id="bio" name="bio" rows="3"
+                                        required><%= user.bio %></textarea>
+                                    <div class="invalid-feedback">
+                                        This field is required.
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger" id="submit-button">Save Changes</button>
+
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+
+    <script>
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+    </script>
+    <script>
+
+        const toastEl = document.querySelector('.toast');
+        if (toastEl) {
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        const avatarInput = document.getElementById('avatar');
+        const profileImg = document.getElementById('img-profile');
+
+        avatarInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                profileImg.src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+
+</body>
+
+</html>

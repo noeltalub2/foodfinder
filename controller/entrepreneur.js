@@ -137,6 +137,7 @@ const getCheckPhone = (req, res) => {
 };
 
 const postRegister = async (req, res) => {
+	const date = new Date().toISOString();
 	//Data from the form ../register
 	const { name, email, phone, username, password } = req.body;
 
@@ -151,6 +152,7 @@ const postRegister = async (req, res) => {
 		username: username,
 		password: hash,
 		profile_picture: "default.png",
+		created_at: date,
 	};
 	//Add account to database
 	var sql = "INSERT INTO entrepreneur SET ?";
@@ -624,14 +626,15 @@ const getProfile = async (req, res) => {
 };
 
 const postProfile = (req, res) => {
+	const date = new Date().toISOString();
 	const username = res.locals.id;
 	const { name, location, bio, profile_picture, phone, email } = req.body;
 
 	const avatar = req.file ? req.file.filename : null; // set avatar to null if req.file is empty
 
 	db.query(
-		"UPDATE entrepreneur SET name = ?, location = ?, bio = ?,phone_number = ?, email = ?, updated_at = current_timestamp() WHERE username = ?",
-		[name, location, bio, phone, email, username],
+		"UPDATE entrepreneur SET name = ?, location = ?, bio = ?,phone_number = ?, email = ?, updated_at = ? WHERE username = ?",
+		[name, location, bio, phone, email, date, username],
 		(err, rset) => {
 			if (err) {
 				console.log(err);

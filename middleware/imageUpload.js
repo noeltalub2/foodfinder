@@ -60,6 +60,6 @@ const upload = multer({
 const uploadImageShop = upload.fields([
 	{ name: "thumbnail" },
 	{ name: "location_image" },
-	{ name: "images", maxCount: 15 },
+	{ name: "images", maxCount: 5 },
 ]);
 module.exports = { imageUpload, uploadImageShop };
